@@ -21,6 +21,7 @@ wheels/
 *.egg
 
 # Virtual Environment
+uni_safety/
 env/
 venv/
 ENV/
