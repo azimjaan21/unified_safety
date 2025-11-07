@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # === CONFIG ===
-PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\fire.yaml"
-NUM_IMAGES = 6
+PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml"
+NUM_IMAGES = 10
 GRID_COLS = 3
 
 # === LOAD YAML ===
