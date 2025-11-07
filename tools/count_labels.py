@@ -4,7 +4,7 @@ from pathlib import Path
 from tqdm import tqdm  # pip install tqdm
 
 # === CONFIG ===
-PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\fire.yaml"
+PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml"
 
 # === FUNCTIONS ===
 def read_yaml(path):

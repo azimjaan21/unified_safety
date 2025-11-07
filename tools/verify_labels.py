@@ -2,7 +2,7 @@
 import os, yaml, cv2
 from pathlib import Path
 
-PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\fire.yaml"
+PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml"
 VALID_CLASSES = {0, 1, 2}
 
 def read_yaml(path):
