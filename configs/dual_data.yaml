@@ -3,13 +3,13 @@ task: dual
 heads:
   - name: ppe
     nc: 3
-    names: [helmet, vest, head]
-    data: datasets/ppe.yaml      # PPE dataset yaml (train/val/test inside)
+    names: [helmet, head, vest]
+    data: data/ppe.yaml      # PPE dataset yaml (train/val/test inside)
     loss_weight: 1.0
   - name: fire
     nc: 2
-    names: [fire, smoke]
-    data: datasets/fire.yaml     # FIRE dataset yaml
+    names: [fire, others, smoke]
+    data: data/fire.yaml     # FIRE dataset yaml
     loss_weight: 1.0
 
 # global training parameters

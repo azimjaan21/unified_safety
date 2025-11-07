@@ -6,10 +6,24 @@ Head A → PPE (helmet, vest, head)
 Head B → Fire/Smoke
 """
 
-import argparse
-import yaml
+import argparse, yaml
 from ultralytics import YOLO
 from ultralytics_ext.dual_task_trainer import DualTaskTrainer
+
+# 🔧 Full registration so YOLO parser can see DualDetect everywhere
+from ultralytics_ext.modules.dual_detect import DualDetect
+import ultralytics
+import ultralytics.nn.modules as nnm
+import ultralytics.nn.tasks as nnt
+
+# register in all namespaces Ultralytics uses
+nnm.DualDetect = DualDetect
+nnt.DualDetect = DualDetect
+ultralytics.nn.DualDetect = DualDetect
+globals()["DualDetect"] = DualDetect
+
+print("✅ DualDetect fully registered in Ultralytics namespaces")
+
 
 
 def main(opt):
