@@ -56,3 +56,7 @@ htmlcov/
 # Jupyter Notebooks
 .ipynb_checkpoints
 *.ipynb
+
+#  Testing
+TC1/
+TC2/
