@@ -1,3 +1,20 @@
+# 🦾 Unified Safety YOLO — Real-Time Industrial PPE + Fire Detection
+
+## 🚧 Overview
+The **Unified Safety YOLO** system is a fine-tuned real-time computer vision pipeline designed for **industrial safety monitoring**.  
+It unifies **PPE detection** (helmet, vest, head) and **fire detection** into a **single YOLOv11m model**, achieving both high accuracy and high FPS suitable for multi-camera deployments.
+
+This project builds upon multi-task fusion research at **DALAB (CBNU)**, where separate PPE and Fire modules were merged and re-optimized for real-time industrial surveillance.
+
+---
+
+## ⚙️ Model Highlights
+- 🧠 **Unified Training:** Combined multi-source datasets (PPE + Fire) with 4 classes  
+0 – helmet
+1 – vest
+2 – head
+3 – fire
+
 - 🔄 **Fine-Tuned Backbone:** YOLOv11m optimized for mixed indoor/outdoor industrial scenes  
 - ⚡ **High-Speed Inference:** Exported to TensorRT (FP16 / INT8) for deployment on edge GPUs  
 - 🎥 **Real-Time Demo:** Supports 8–10 simultaneous camera feeds on TITAN RTX  
