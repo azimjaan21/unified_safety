@@ -16,6 +16,7 @@ This project builds upon multi-task fusion research at **DALAB (CBNU)**, where s
 3 – fire
 
 ## 🏭Real Manufacturing Scenarios (Model Performance)
+<img width="1280" height="890" alt="image" src="https://github.com/user-attachments/assets/53aa8878-b6a3-407f-be37-2379ecfc9757" />
 
 
 ## 🚀Results 
