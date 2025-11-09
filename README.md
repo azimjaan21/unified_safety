@@ -1,4 +1,4 @@
-# 🦾 Unified Safety YOLO — Real-Time Industrial PPE + Fire Detection
+# Unified Safety YOLO — Real-Time Industrial PPE + Fire Detection
 
 ## 🚧 Overview
 The **Unified Safety YOLO** system is a fine-tuned real-time computer vision pipeline designed for **industrial safety monitoring**.  
@@ -15,18 +15,16 @@ This project builds upon multi-task fusion research at **DALAB (CBNU)**, where s
 2 – head
 3 – fire
 
+## 🏭Real Manufacturing Scenarios (Model Performance)
+
+
+## 🚀Results 
+<img width="2400" height="1200" alt="image" src="https://github.com/user-attachments/assets/0bb42f68-802f-41e8-a259-2d5815865c7a" />
+
+  
 - 🔄 **Fine-Tuned Backbone:** YOLOv11m optimized for mixed indoor/outdoor industrial scenes  
 - ⚡ **High-Speed Inference:** Exported to TensorRT (FP16 / INT8) for deployment on edge GPUs  
-- 🎥 **Real-Time Demo:** Supports 8–10 simultaneous camera feeds on TITAN RTX  
-
----
-
-## 🧩 Dataset Composition
-| Split | Images | Boxes | Notes |
-|-------|---------|--------|-------|
-| **Train** | 1,751 | 9,163 | Unified industrial scenes (factory, lab, warehouse) |
-| **Val** | 198 | 805 | Clean validation across mixed conditions |
-| **Total** | 1,949 | 9,968 | 4 classes (Helmet, Vest, Head, Fire) |
+- 🎥 **Real-Time Demo:** Supports 8–10 simultaneous camera feeds. 
 
 ---
 
@@ -52,5 +50,5 @@ This project builds upon multi-task fusion research at **DALAB (CBNU)**, where s
 ## 🧠 Citation / Acknowledgment
 If you use this work, please acknowledge:
 
-- Azimjon Axtamov, DALAB @ Chungbuk National University (CBNU)
+- Azimjon Axtamov, DALAB | Chungbuk National University (CBNU)
 - Unified Multimodal Safety YOLO: Real-Time Industrial PPE + Fire Detection
