@@ -1,67 +1,83 @@
-import cv2
-import torch
-import time
+import cv2, torch, time
 from ultralytics import YOLO
-import numpy as np
 
 # === CONFIG ===
 MODEL_PATH = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\fine_tune_unify_safety\finetune_unified_safety\weights\best.pt"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-CONF_THRESH = 0.5
-CAM_INDEX = 0  # 0 = default webcam
-WINDOW_NAME = "YOLO Unified Safety Detection"
+CONF = 0.5
+CAM = 0
+EPS = 1e-5
+
+# === CLASS COLORS (BGR) ===
+CLASS_COLORS = {
+    0: (0, 255, 255),   # helmet → yellow
+    1: (0, 255, 0),     # vest → green
+    2: (0, 0, 255),     # head → red
+    3: (0, 165, 255),   # fire → orange
+}
 
 # === LOAD MODEL ===
 print(f"🚀 Loading model from: {MODEL_PATH}")
-model = YOLO(MODEL_PATH)
-model.to(DEVICE)
-print(f"✅ Model loaded on {DEVICE.upper()}")
+model = YOLO(MODEL_PATH).to(DEVICE)
+gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
+print(f"✅ Model loaded on {gpu_name}")
 
-# === SETUP CAMERA ===
-cap = cv2.VideoCapture(CAM_INDEX)
+# === CAMERA SETUP ===
+cap = cv2.VideoCapture(CAM)
 if not cap.isOpened():
-    raise IOError("❌ Cannot open webcam")
-
-# Optional: set camera resolution
+    raise RuntimeError("❌ Cannot open webcam")
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 # === FPS TRACKING ===
-fps_smooth = 0
-alpha = 0.9  # smoothing factor
-prev_time = time.time()
+smooth_fps = 0
+alpha = 0.9
 
 print("🎥 Press 'Q' to quit.")
 while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("⚠️ Frame not received, skipping...")
+    ok, frame = cap.read()
+    if not ok:
         continue
 
-    # === Inference ===
-    start_time = time.time()
-    results = model(frame, conf=CONF_THRESH, device=DEVICE, verbose=False)
-    end_time = time.time()
+    t0 = time.time()
+    results = model(frame, conf=CONF, device=DEVICE, verbose=False)
+    dt = max(time.time() - t0, EPS)
 
-    # === FPS Calculation ===
-    fps = 1 / (end_time - start_time)
-    fps_smooth = alpha * fps_smooth + (1 - alpha) * fps  # exponential moving average
+    fps = 1.0 / dt
+    smooth_fps = alpha * smooth_fps + (1 - alpha) * fps
 
-    # === Visualization ===
-    annotated = results[0].plot()
-    cv2.putText(annotated, f"FPS: {fps:.1f}", (20, 40),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-    cv2.putText(annotated, f"AVG: {fps_smooth:.1f}", (20, 80),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 200, 0), 2)
+    annotated = frame.copy()
+    for box in results[0].boxes:
+        cls = int(box.cls[0])
+        conf = float(box.conf[0])
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+        color = CLASS_COLORS.get(cls, (255, 255, 255))
+        label = f"{model.names[cls]} {conf:.2f}"
 
-    # === Display ===
-    cv2.imshow(WINDOW_NAME, annotated)
+        cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 3)
+        cv2.putText(annotated, label, (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, color, 3)
 
-    # Exit condition
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    # === SMOOTH FPS + GPU OVERLAY ===
+    fps_text = f"FPS: {smooth_fps:.1f}"
+    gpu_text = f"GPU: {gpu_name}"  
+
+    # Draw black rectangle background
+    cv2.rectangle(annotated, (15, 15), (370, 90), (0, 0, 0), -1)
+
+    # White FPS
+    cv2.putText(annotated, fps_text, (30, 55),
+                cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 3)
+
+    # Green GPU name
+    cv2.putText(annotated, gpu_text, (30, 85),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+    # === DISPLAY ===
+    cv2.imshow("🟢 Unified Safety Detection", annotated)
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
-# === CLEANUP ===
 cap.release()
 cv2.destroyAllWindows()
 print("🛑 Webcam test ended.")
