@@ -11,6 +11,7 @@ def train():
         project="runs/fine_tune_unify_safety",
         name="finetune_unified_safety",
         lr0=0.001,
+        resume=False,
     )
 
 if __name__ == "__main__":
