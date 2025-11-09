@@ -1,23 +1,16 @@
 from ultralytics import YOLO
 
 def train():
-    model = YOLO("yolo11m.pt") 
+    model = YOLO(r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\train_unified\yolo11m_unified_safety\weights\best.pt") 
     model.train(
-        data= r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml",
-        epochs=100,
+        data= r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\new_unify_safety\new_unify_safety.yaml",
+        epochs=20,
         imgsz=640,
-        batch=16,
+        batch=8,
         device=0,
-        workers=8,
-        project="runs/train_unified",
-        name="yolo11m_unified_safety",
-        cache=True,
-        amp=True,
-        lr0=0.005,
-        optimizer="SGD",
-        mosaic=0.5,
-        mixup=0.1,
-        patience=30
+        project="runs/fine_tune_unify_safety",
+        name="finetune_unified_safety",
+        lr0=0.001,
     )
 
 if __name__ == "__main__":
