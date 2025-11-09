@@ -28,6 +28,9 @@ ENV/
 .env
 .venv
 
+# Training Outputs
+runs/
+
 # Data and Models
 *.pth
 *.pt

@@ -6,7 +6,7 @@ def train():
         data= r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml",
         epochs=100,
         imgsz=640,
-        batch=8,
+        batch=16,
         device=0,
         workers=8,
         project="runs/train_unified",
