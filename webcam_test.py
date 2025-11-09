@@ -1,8 +1,19 @@
-import cv2, torch, time
+"""
+webcam_test.py
+-----------------------------
+Runs live detection using either:
+- PyTorch (.pt)
+- TensorRT (.engine)
+
+Shows smoothed FPS and GPU name overlay.
+Author: Azimjon Akhtamov
+"""
+
+import cv2, torch, time, os
 from ultralytics import YOLO
 
 # === CONFIG ===
-MODEL_PATH = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\fine_tune_unify_safety\finetune_unified_safety\weights\best.engine"
+MODEL_PATH = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\engine_exports\FP16\best_fp16.engine"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 CONF = 0.5
 CAM = 0
@@ -18,7 +29,14 @@ CLASS_COLORS = {
 
 # === LOAD MODEL ===
 print(f"🚀 Loading model from: {MODEL_PATH}")
-model = YOLO(MODEL_PATH, task='detect').to(DEVICE)
+ext = os.path.splitext(MODEL_PATH)[-1].lower()
+
+if ext == ".pt":
+    model = YOLO(MODEL_PATH).to(DEVICE)
+else:
+    # TensorRT engine doesn’t use .to()
+    model = YOLO(MODEL_PATH, task="detect")
+
 gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
 print(f"✅ Model loaded on {gpu_name}")
 
@@ -40,9 +58,8 @@ while True:
         continue
 
     t0 = time.time()
-    results = model(frame, conf=CONF, device=DEVICE, verbose=False)
+    results = model.predict(source=frame, conf=CONF, device=DEVICE, verbose=False)
     dt = max(time.time() - t0, EPS)
-
     fps = 1.0 / dt
     smooth_fps = alpha * smooth_fps + (1 - alpha) * fps
 
@@ -58,22 +75,22 @@ while True:
         cv2.putText(annotated, label, (x1, y1 - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, color, 3)
 
-    # === SMOOTH FPS + GPU OVERLAY ===
+    # === FPS + GPU OVERLAY ===
     fps_text = f"FPS: {smooth_fps:.1f}"
-    gpu_text = f"GPU: {gpu_name}"  
+    gpu_text = f"GPU: {gpu_name}"
 
-    # Draw black rectangle background
-    cv2.rectangle(annotated, (15, 15), (370, 90), (0, 0, 0), -1)
+    # Black background for overlay
+    box_width = 360 if len(gpu_name) > 15 else 320
+    cv2.rectangle(annotated, (15, 15), (15 + box_width, 90), (0, 0, 0), -1)
 
-    # White FPS
+    # White FPS text
     cv2.putText(annotated, fps_text, (30, 55),
                 cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 3)
 
-    # Green GPU name
+    # Green GPU text
     cv2.putText(annotated, gpu_text, (30, 85),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-    # === DISPLAY ===
     cv2.imshow("🟢 Unified Safety Detection", annotated)
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
