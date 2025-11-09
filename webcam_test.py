@@ -2,7 +2,7 @@ import cv2, torch, time
 from ultralytics import YOLO
 
 # === CONFIG ===
-MODEL_PATH = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\fine_tune_unify_safety\finetune_unified_safety\weights\best.pt"
+MODEL_PATH = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\runs\fine_tune_unify_safety\finetune_unified_safety\weights\best.engine"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 CONF = 0.5
 CAM = 0
@@ -18,7 +18,7 @@ CLASS_COLORS = {
 
 # === LOAD MODEL ===
 print(f"🚀 Loading model from: {MODEL_PATH}")
-model = YOLO(MODEL_PATH).to(DEVICE)
+model = YOLO(MODEL_PATH, task='detect').to(DEVICE)
 gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
 print(f"✅ Model loaded on {gpu_name}")
 
