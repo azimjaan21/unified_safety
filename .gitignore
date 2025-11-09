@@ -57,6 +57,9 @@ htmlcov/
 .ipynb_checkpoints
 *.ipynb
 
+#TRT Engines
+*.engine
+
 #  Testing
 TC1/
 TC2/
