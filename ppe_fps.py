@@ -4,9 +4,9 @@ from ultralytics import YOLO
 import os
 
 def main():
-    model_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\ppe.pt"
-    video_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\ppe3.mp4"
-    output_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\ppe_output_result1.mp4"
+    model_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\uni_safety.pt"
+    video_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\TC1\ppe3.mp4"
+    output_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\output\ppe_output_3.mp4"
 
     if not os.path.exists(model_path):
         print(f"Error: Model file not found at {model_path}")

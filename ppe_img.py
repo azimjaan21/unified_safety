@@ -105,9 +105,9 @@ def process_video(model, video_path, output_path=None, show_video=True):
 
 def main():
     # Configuration
-    model_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\ppe.pt"
-    input_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\ppe4.png"  
-    output_dir = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\AI-COMS\KCL_test\TC1\output"
+    model_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\uni_safety.pt"
+    input_path = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\TC1\ppe4.png"  
+    output_dir = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\output"
     
     # Validate paths
     if not os.path.exists(model_path):

@@ -4,7 +4,7 @@ from pathlib import Path
 from tqdm import tqdm  # pip install tqdm
 
 # === CONFIG ===
-PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\unified_ppe_fire.yaml"
+PPE_YAML = r"C:\Users\dalab\Desktop\azimjaan21\SafeFactory System\unified_safety\data\new_data.yaml"
 
 # === FUNCTIONS ===
 def read_yaml(path):
@@ -13,7 +13,7 @@ def read_yaml(path):
 
 def get_label_dirs(data):
     base = Path(data.get('path', '.'))
-    subsets = ['train', 'val', 'test']
+    subsets = ['train', 'val']
     dirs = {}
     for s in subsets:
         sub = data.get(s)
