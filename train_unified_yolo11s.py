@@ -37,7 +37,7 @@ SAVE_DIR = Path("#unified_yolo11s_detpose")
 DEVICE = "0"
 
 # YOLO11 backbone split point
-BACKBONE_END_IDX = 7
+BACKBONE_END_IDX = 11
 IMG_SIZE = 640
 CONF_THRES = 0.25
 FPS_TEST_IMGS = 50
@@ -145,7 +145,7 @@ def measure_fps(model, dataset_yaml, n=50, imgsz=640):
 class DualHeadDetPose(nn.Module):
     """Shared YOLO11-S backbone → Detection + Pose Heads"""
 
-    def __init__(self, det_model: YOLO, pose_model: YOLO, backbone_end_idx=7):
+    def __init__(self, det_model: YOLO, pose_model: YOLO, backbone_end_idx=11):
         super().__init__()
         det_raw = det_model.model
         pose_raw = pose_model.model
