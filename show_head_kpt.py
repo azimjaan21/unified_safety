@@ -9,8 +9,8 @@ ULTRA_BLUE = Colors()(0, bgr=True)
 # CONFIGURATION
 # -----------------------------
 pose_model_path = "yolo11m-pose.pt"   # YOLOv11m-pose model
-ppe_model_path = "ppe.pt"             # PPE (helmet detection) model
-image_path = "helmet.jpg"              # Input image
+ppe_model_path = "weights/ppe.pt"             # PPE (helmet detection) model
+image_path = "image.png"              # Input image
 output_path = "output_helmet_pose.jpg"
 
 # Define keypoint indices for head (COCO format)
@@ -45,7 +45,7 @@ for r in ppe_results:
     for box in r.boxes:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
         conf = float(box.conf[0])
-        cv2.rectangle(img, (x1, y1), (x2, y2), ULTRA_BLUE, 7)  # blue box
+        cv2.rectangle(img, (x1, y1), (x2, y2), ULTRA_BLUE, 5)  # blue box
 
         # Add 'helmet' label in white with blue background
         label = "helmet"
